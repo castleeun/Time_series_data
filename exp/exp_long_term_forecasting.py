@@ -34,6 +34,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
     def _select_criterion(self):
         criterion = nn.MSELoss()
+        # criterion = nn.L1Loss()
         return criterion
 
     def vali(self, vali_data, vali_loader, criterion):
@@ -77,6 +78,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         return total_loss
 
     def train(self, setting):
+        torch.autograd.set_detect_anomaly(True)
+
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         test_data, test_loader = self._get_data(flag='test')
@@ -102,9 +105,14 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             self.model.train()
             epoch_time = time.time()
+            # batch_x shape : (1,80,3)
+            # batch_y shape : (1,660,3)
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(train_loader):
                 iter_count += 1
                 model_optim.zero_grad()
+                print(batch_x[0],batch_y[0])
+                print(batch_x_mark[0],batch_y_mark[0])
+
                 batch_x = batch_x.float().to(self.device)
 
                 batch_y = batch_y.float().to(self.device)
@@ -123,6 +131,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                         else:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
 
+
                         f_dim = -1 if self.args.features == 'MS' else 0
                         outputs = outputs[:, -self.args.pred_len:, f_dim:]
                         batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
@@ -137,6 +146,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     f_dim = -1 if self.args.features == 'MS' else 0
                     outputs = outputs[:, -self.args.pred_len:, f_dim:]
                     batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                    # print(torch.isnan(outputs.to('cpu')).any())
                     loss = criterion(outputs, batch_y)
                     train_loss.append(loss.item())
 
@@ -154,6 +164,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     scaler.update()
                 else:
                     loss.backward()
+                    # max_norm = 1.0
+                    # torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm)
                     model_optim.step()
 
             print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
@@ -220,6 +232,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 batch_y = batch_y.detach().cpu().numpy()
                 if test_data.scale and self.args.inverse:
                     shape = outputs.shape
+                    print("outputs.shape: ", outputs.shape)
+                    print("batch_y.shape: ", batch_y.shape)
                     outputs = test_data.inverse_transform(outputs.squeeze(0)).reshape(shape)
                     batch_y = test_data.inverse_transform(batch_y.squeeze(0)).reshape(shape)
         
