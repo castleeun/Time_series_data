@@ -5,7 +5,7 @@ python3 -u run.py \
   --task_name long_term_forecast \
   --is_training 0 \
   --root_path ./dataset/daejeon_subway/one_month_station \
-  --data_path octnov.csv \
+  --data_path 1105.csv \
   --model_id daejeon_80_620_f3_l3_620in \
   --model $model_name \
   --data custom \
@@ -28,6 +28,7 @@ python3 -u run.py \
   --num_workers 20\
   --factor 3\
   --inverse\
+  --infer
 
 # python3 -u run.py \
 #   --task_name long_term_forecast \
