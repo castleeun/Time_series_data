@@ -298,8 +298,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
 
 
-
-
     def infer(self, setting, test=0):
         test_data, test_loader = self._get_data(flag='infer')
         if test:
@@ -349,7 +347,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                         outputs = np.tile(outputs, [1, 1, batch_y.shape[-1]])
                     outputs = test_data.inverse_transform(outputs.reshape(shape[0] * shape[1], -1)).reshape(shape)
                     batch_y = test_data.inverse_transform(batch_y.reshape(shape[0] * shape[1], -1)).reshape(shape)
-                
+
                 outputs = outputs[:, :, f_dim:]
                 batch_y = batch_y[:, :, f_dim:]
 
