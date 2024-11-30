@@ -19,3 +19,6 @@ mse:0.2340027093887329, mae:0.3436661660671234
 long_term_forecast_daejeon_80_620_f3_l3_3600in_TimeXer_custom_ftMS_sl3600_ll40_pl620_dm512_nh8_el3_dl3_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Timexer-MS_0  
 mse:0.2340017557144165, mae:0.34366488456726074
 
+long_term_forecast_daejeon_80_620_f3_l3_620in_TimeXer_custom_ftMS_sl620_ll40_pl620_dm512_nh8_el3_dl3_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Timexer-MS_0  
+mse:15951.032471485842, mae:82.98601125207664
+

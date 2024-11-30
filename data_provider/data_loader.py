@@ -220,8 +220,8 @@ class Dataset_Custom(Dataset):
             self.label_len = size[1]
             self.pred_len = size[2]
         # init
-        assert flag in ['train', 'test', 'val']
-        type_map = {'train': 0, 'val': 1, 'test': 2}
+        # assert flag in ['train', 'test', 'val']
+        type_map = {'train': 0, 'val': 1, 'test': 2, 'infer':3}
         self.set_type = type_map[flag]
 
         self.features = features
@@ -303,6 +303,7 @@ class Dataset_Custom(Dataset):
         return seq_x, seq_y, seq_x_mark, seq_y_mark
 
     def __len__(self):
+        # print(len(self.data_x), self.seq_len, self.pred_len)
         return len(self.data_x) - self.seq_len - self.pred_len + 1
 
     def inverse_transform(self, data):
