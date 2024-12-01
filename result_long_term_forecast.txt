@@ -202,3 +202,6 @@ mse:1191.827880859375, mae:20.96068572998047
 long_term_forecast_1114_80_620_f3_l3_620in_TimeXer_custom_ftMS_sl620_ll140_pl620_dm512_nh8_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Timexer-MS_0  
 mse:1500.001220703125, mae:23.434799194335938
 
+long_term_forecast_1115_80_620_f3_l3_620in_TimeXer_custom_ftMS_sl620_ll140_pl620_dm512_nh8_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Timexer-MS_0  
+mse:202.82647705078125, mae:8.781448364257812
+
