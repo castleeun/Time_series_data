@@ -4,6 +4,7 @@
 
 ### 사용한 모델: [TimeXer: Empowering Transformers for Time Series Forecasting with Exogenous Variables](https://arxiv.org/abs/2402.19072)
 
+### 제출 파일: code.ipynb [링크](https://github.com/castleeun/Time_series_data/blob/main/code.ipynb)
 ---
 
 ## 데이터 EDA 및 Preprocessing
@@ -64,6 +65,11 @@
 | 과거 데이터의 **시점 간 상관관계**를 기반으로 예측하지만, **장기적인 종속성**을 학습하기는 어려운 경우가 많습니다.  | **장기 의존성(Long-term Dependency)** 및 변수 간 **비선형 상관관계**를 동시에 학습할 수 있습니다.                           |
 | 상대적으로 단순하고 해석이 용이하지만, 복잡한 데이터나 결측치가 포함된 경우 성능이 크게 저하됩니다.                 | 데이터의 **결측치, 시점 불일치, 주파수 차이**에도 강인한 성능을 보여줍니다.                                                 |
 
+<p align="center">
+<img src=".\figures\TimeXer.png" width = "800" height = "" alt="" align=center />
+</p>
+
+
 > **Team 시계열심의 선택: TimeXer**  
 > => 기존 ARIMA 기반 접근법의 한계를 극복하기 위해 TimeXer를 이용하였습니다.
 >
@@ -74,12 +80,11 @@
 ---
 
 ## 주요 코드 설명
+### Colab (Jupyter Notebook) 실행
+`code.ipynb`참고 [링크](https://github.com/castleeun/Time_series_data/blob/main/code.ipynb)
 
-<p align="center">
-<img src=".\figures\TimeXer.png" width = "800" height = "" alt="" align=center />
-</p>
-
-### Training 커맨드
+### bash 환경 실행
+#### Training 커맨드
 
 ```bash
 #!/bin/bash
@@ -118,7 +123,7 @@ do
 done
 ```
 
-### Prediction 커맨드
+#### Prediction 커맨드
 
 ```bash
 model_name=TimeXer
