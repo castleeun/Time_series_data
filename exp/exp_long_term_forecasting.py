@@ -202,8 +202,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         self.model.eval()
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
-                print(batch_x[0])
-                print(batch_y[0])
                 batch_x = batch_x.float().to(self.device)
                 batch_y = batch_y.float().to(self.device)
 
@@ -220,6 +218,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                         else:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                            outputs1 = self.model(batch_x, batch_x_mark, 0, 0)
+                            print(torch.equal(outputs,outputs1))
                 else:
                     if self.args.output_attention:
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -298,7 +298,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
 
 
-    def infer(self, setting, test=0):
+    def infer(self, setting, test=1):
         test_data, test_loader = self._get_data(flag='infer')
         if test:
             print('loading model')
@@ -313,7 +313,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         self.model.eval()
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
-
+                print(batch_x.shape,batch_y.shape)
                 batch_x = batch_x.float().to(self.device)
                 batch_y = batch_y.float().to(self.device)
 
@@ -329,7 +329,10 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                         if self.args.output_attention:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                         else:
-                            outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                            outputs1 = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                            outputs = self.model(batch_x, batch_x_mark, 0, 0)
+                            print(torch.equal(outputs,outputs1))
+
                 else:
                     if self.args.output_attention:
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
